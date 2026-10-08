@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Joyeux Anniversaire Ma Vie ❤️</title>
+  <style>
+    :root {
+      --bg-color: #3b0918;
+      --card-bg: #4a0e20;
+      --text-gold: #f3d3a0;
+      --text-light: #fefefe;
+      --accent-pink: #d1587a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-light);
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; padding: 20px 15px;
+    }
+
+    .container {
+      width: 100%; max-width: 440px; margin: 0 auto;
+      text-align: center;
+    }
+
+    /* 🔐 1. ÉCRAN DE VERROUILLAGE */
+    .lock-screen {
+      background: var(--card-bg);
+      border: 1px solid rgba(243, 211, 160, 0.2);
+      border-radius: 24px; padding: 35px 20px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    }
+    .badge {
+      display: inline-block; padding: 6px 14px; border-radius: 20px;
+      background: rgba(255, 255, 255, 0.08); font-size: 0.8rem;
+      letter-spacing: 1px; text-transform: uppercase; margin-bottom: 20px;
+    }
+    h1.title {
+      font-family: 'Georgia', serif; font-size: 1.8rem;
+      color: var(--text-gold); margin-bottom: 25px; line-height: 1.3;
+    }
+    .input-box {
+      width: 100%; padding: 14px; border-radius: 12px;
+      border: 1px solid rgba(243, 211, 160, 0.3);
+      background: rgba(0, 0, 0, 0.2); color: #fff;
+      font-size: 1rem; text-align: center; outline: none; margin-bottom: 15px;
+    }
+    .btn-gold {
+      width: 100%; padding: 14px; border-radius: 12px; border: none;
+      background: linear-gradient(135deg, #f3d3a0 0%, #d4a359 100%);
+      color: #3b0918; font-weight: bold; font-size: 1rem; cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .btn-gold:active { transform: scale(0.98); }
+
+    /* 🎁 CONTENU DU SITE (MASQUÉ AU DÉPART) */
+    .content { display: none; }
+    .content.active { display: block; animation: fadeIn 0.8s ease-in; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    .section {
+      background: var(--card-bg); border-radius: 20px;
+      padding: 25px 20px; margin-bottom: 25px;
+      border: 1px solid rgba(243, 211, 160, 0.15); text-align: left;
+    }
+
+    .section-title {
+      font-family: 'Georgia', serif; font-size: 1.4rem;
+      color: var(--text-gold); margin-bottom: 15px; text-align: center;
+    }
+
+    /* 💌 2. ENVELOPPE ANIMÉE */
+    .envelope-box {
+      background: rgba(0, 0, 0, 0.2); border-radius: 16px;
+      padding: 20px; text-align: center; cursor: pointer;
+      border: 1px dashed var(--text-gold); transition: all 0.3s;
+    }
+    .envelope-icon { font-size: 2.5rem; margin-bottom: 8px; }
+    .letter-text {
+      display: none; font-size: 0.95rem; line-height: 1.7;
+      color: #eaeaea; text-align: left; margin-top: 15px;
+      border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;
+    }
+
+    /* 📸 3. POLAROÏDS */
+    .polaroid-grid { display: flex; flex-direction: column; gap: 20px; align-items: center; }
+    .polaroid {
+      background: #fff; color: #333; padding: 12px 12px 25px 12px;
+      border-radius: 4px; box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+      width: 90%; transform: rotate(-2deg); transition: transform 0.3s;
+    }
+    .polaroid:nth-child(even) { transform: rotate(2deg); }
+    .polaroid img { width: 100%; height: 260px; object-fit: cover; border-radius: 2px; }
+    .polaroid p { font-family: 'Courier New', monospace; margin-top: 10px; text-align: center; font-weight: bold; font-size: 0.9rem; }
+
+    /* ⏳ 4. LIGNE DU TEMPS */
+    .timeline { border-left: 2px solid var(--text-gold); padding-left: 20px; margin-left: 10px; }
+    .timeline-item { position: relative; margin-bottom: 25px; }
+    .timeline-item::before {
+      content: ''; position: absolute; left: -26px; top: 4px;
+      width: 10px; height: 10px; border-radius: 50%; background: var(--text-gold);
+    }
+    .timeline-date { font-size: 0.8rem; color: var(--text-gold); opacity: 0.8; margin-bottom: 4px; }
+    .timeline-title { font-weight: bold; font-size: 1.05rem; margin-bottom: 6px; }
+    .timeline-img { width: 100%; height: 160px; object-fit: cover; border-radius: 12px; margin-top: 8px; }
+
+    /* ✨ 5. CE QUI TE REND UNIQUE */
+    .unique-list { list-style: none; }
+    .unique-list li {
+      padding: 12px 15px; background: rgba(0, 0, 0, 0.2);
+      border-radius: 10px; margin-bottom: 10px; font-size: 0.95rem;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .unique-list span { color: var(--text-gold); font-weight: bold; }
+
+    /* ⏱️ 6. COMPTEUR DE TEMPS */
+    .timer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; text-align: center; }
+    .timer-card { background: rgba(0, 0, 0, 0.3); padding: 12px 5px; border-radius: 10px; border: 1px solid rgba(243, 211, 160, 0.2); }
+    .timer-number { font-size: 1.3rem; font-weight: bold; color: var(--text-gold); }
+    .timer-label { font-size: 0.7rem; text-transform: uppercase; opacity: 0.7; margin-top: 4px; }
+
+    /* 🎙️ 7. MESSAGE VOCAL */
+    .audio-player {
+      background: rgba(0,0,0,0.2); padding: 15px; border-radius: 15px;
+      display: flex; align-items: center; gap: 15px; border: 1px solid rgba(243, 211, 160, 0.2);
+    }
+    .vinyl {
+      width: 45px; height: 45px; border-radius: 50%; background: #111;
+      border: 2px solid var(--text-gold); display: flex; align-items: center; justify-content: center;
+      animation: spin 4s linear infinite paused;
+    }
+    .vinyl.playing { animation-play-state: running; }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    /* ✈️ 8. QUIZ / DESTINATION */
+    .quiz-btn {
+      width: 100%; padding: 12px; margin-bottom: 8px; border-radius: 10px;
+      border: 1px solid rgba(243, 211, 160, 0.3); background: rgba(255,255,255,0.05);
+      color: #fff; text-align: left; cursor: pointer; transition: 0.3s;
+    }
+    .quiz-btn:hover { background: rgba(243, 211, 160, 0.2); }
+
+    /* 💌 FORMSPREE RETOUR */
+    .feedback-btn {
+      padding: 10px 15px; border-radius: 20px; border: 1px solid var(--text-gold);
+      background: transparent; color: var(--text-gold); font-size: 0.85rem;
+      cursor: pointer; margin: 4px; transition: 0.3s;
+    }
+    .feedback-btn:hover { background: var(--text-gold); color: #3b0918; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- 🔒 STEP 1 : ÉCRAN DE VERROUILLAGE -->
+    <div id="lockScreen" class="lock-screen">
+      <div class="badge">🔒 Invitation Privée</div>
+      <h1 class="title">Joyeux 1er Anniversaire Ma Vie ❤️</h1>
+      <p style="font-size: 0.9rem; margin-bottom: 20px; opacity: 0.8;">Entre le mot secret pour débloquer ta surprise :</p>
+      <input type="text" id="secretInput" class="input-box" placeholder="Ex: 0123 ou votre mot secret">
+      <button class="btn-gold" onclick="unlock()">Ouvrir ✨</button>
+      <p id="errorMsg" style="color: #ff6b6b; font-size: 0.8rem; margin-top: 10px; display: none;">Mot de passe incorrect 😜</p>
+    </div>
+
+    <!-- 🎁 STEP 2 : CONTENU PRINCIPAL -->
+    <div id="mainContent" class="content">
+
+      <h1 class="title" style="font-size: 2rem; margin: 20px 0 10px;">Un An Ensemble 🥂</h1>
+      <p style="font-size: 0.85rem; color: var(--text-gold); margin-bottom: 25px;">FAIS DÉFILER POUR DÉCOUVRIR TES SURPRISES</p>
+
+      <!-- 💌 LETTRE -->
+      <div class="section">
+        <h2 class="section-title">Une lettre rien que pour toi 📜</h2>
+        <div class="envelope-box" onclick="toggleLetter()">
+          <div class="envelope-icon">💌</div>
+          <div style="font-size: 0.9rem; color: var(--text-gold);">Touche l'enveloppe pour lire...</div>
+          <div id="letterText" class="letter-text">
+            Joyeux anniversaire mon amour ! ❤️<br><br>
+            Aujourd'hui, cela fait exactement 1 an qu'on avance main dans la main. Merci pour chaque éclat de rire, chaque câlin et tout l'amour que tu m'apportes chaque jour.<br><br>
+            Cette surprise rassemble quelques morceaux de notre histoire, rien que pour toi. Je t'aime infiniment ! 🕊️✨
+          </div>
+        </div>
+      </div>
+
+      <!-- 📸 SOUVENIRS POLAROÏD -->
+      <div class="section">
+        <h2 class="section-title">Nos plus beaux clichés 📸</h2>
+        <div class="polaroid-grid">
+          <div class="polaroid">
+            <img src="image.jpg" alt="Souvenir 1">
+            <p>Toi & Moi sur la plage 🌊</p>
+          </div>
+          <div class="polaroid">
+            <img src="photo2.jpg" alt="Souvenir 2">
+            <p>Notre plus belle complicité ❤️</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ⏳ LIGNE DU TEMPS -->
+      <div class="section">
+        <h2 class="section-title">Notre Histoire 📖</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">Le Début</div>
+            <div class="timeline-title">Notre rencontre ✨</div>
+            <p style="font-size: 0.85rem; opacity: 0.8;">Le jour où tout a commencé et où ma vie a changé.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">1er An</div>
+            <div class="timeline-title">Un an de bonheur ❤️</div>
+            <p style="font-size: 0.85rem; opacity: 0.8;">365 jours de rires, de complicité et d'amour fou.</p>
+            <img src="image.jpg" class="timeline-img" alt="Timeline Photo">
+          </div>
+        </div>
+      </div>
+
+      <!-- ✨ CE QUI TE REND UNIQUE -->
+      <div class="section">
+        <h2 class="section-title">Tout ce qui te rend unique ✨</h2>
+        <ul class="unique-list">
+          <li><span>01.</span> Ta façon si douce de me faire sourire</li>
+          <li><span>02.</span> Ton rire et ton énergie positive</li>
+          <li><span>03.</span> La personne extraordinaire que tu es</li>
+          <li><span>04.</span> TOUT absolument TOUT chez toi ! ❤️</li>
+        </ul>
+      </div>
+
+      <!-- ⏱️ COMPTEUR DE TEMPS -->
+      <div class="section">
+        <h2 class="section-title">Ensemble depuis... ⏳</h2>
+        <div class="timer-grid">
+          <div class="timer-card"><div class="timer-number" id="days">365</div><div class="timer-label">Jours</div></div>
+          <div class="timer-card"><div class="timer-number" id="hours">12</div><div class="timer-label">Heures</div></div>
+          <div class="timer-card"><div class="timer-number" id="minutes">30</div><div class="timer-label">Min</div></div>
+          <div class="timer-card"><div class="timer-number" id="seconds">45</div><div class="timer-label">Sec</div></div>
+        </div>
+      </div>
+
+      <!-- 🎙️ MESSAGE VOCAL / MUSIQUE -->
+      <div class="section">
+        <h2 class="section-title">Un mot doux pour tes oreilles 🎵</h2>
+        <div class="audio-player">
+          <div class="vinyl" id="vinylIcon">🎙️</div>
+          <div style="flex-1; text-align: left;">
+            <div style="font-size: 0.9rem; font-weight: bold;">Un message vocal pour toi</div>
+            <div style="font-size: 0.75rem; opacity: 0.7;">Appuie pour écouter 🎧</div>
+          </div>
+          <button class="feedback-btn" onclick="playAudio()">Écouter</button>
+        </div>
+        <audio id="vocalAudio" src="musique.mp3"></audio>
+      </div>
+
+      <!-- ✈️ QUIZ DESTINATION -->
+      <div class="section">
+        <h2 class="section-title">Notre prochaine destination ? ✈️</h2>
+        <p style="font-size: 0.85rem; margin-bottom: 15px; opacity: 0.8;">Où aimerais-tu qu'on s'échappe ensemble ?</p>
+        <button class="quiz-btn" onclick="sendChoice('Voyage à la plage')">🏖️ Un week-end romantique au bord de la mer</button>
+        <button class="quiz-btn" onclick="sendChoice('Dîner aux chandelles')">🍽️ Un dîner gastronomique aux chandelles</button>
+        <button class="quiz-btn" onclick="sendChoice('Aventure & Escapade')">🏔️ Une escapade surprise en amoureux</button>
+      </div>
+
+      <!-- 💬 REACTION & FORMSPREE -->
+      <div class="section" style="text-align: center;">
+        <h2 class="section-title">Un petit mot en retour ? 💌</h2>
+        <form id="annivForm" action="https://formspree.io/f/mvzeebeo" method="POST">
+          <input type="hidden" name="Choix Destination" id="destinationChoice">
+          <input type="hidden" name="Réaction" id="reactionInput">
+          
+          <p style="font-size: 0.85rem; margin-bottom: 10px;">Qu'as-tu pensé de cette surprise ?</p>
+          <button type="button" class="feedback-btn" onclick="submitReaction('J\'adore ! ❤️')">J'adore ! ❤️</button>
+          <button type="button" class="feedback-btn" onclick="submitReaction('Tu m\'as ému(e) 🥺')">Tu m'as ému(e) 🥺</button>
+          
+          <textarea name="Message Anniversaire" style="width: 100%; margin-top: 15px; padding: 12px; border-radius: 10px; border: 1px solid rgba(243,211,160,0.3); background: rgba(0,0,0,0.2); color: #fff; font-family: inherit; outline: none;" rows="3" placeholder="Écris-moi ton petit mot ici..."></textarea>
+          
+          <button type="submit" class="btn-gold" style="margin-top: 15px;">Envoyer mon message 💌</button>
+        </form>
+        <p id="thanksMsg" style="display: none; color: var(--text-gold); margin-top: 15px; font-weight: bold;">Message envoyé ! Je t'aime ❤️</p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    // 🔐 Code secret d'ouverture (Tu peux changer '0123' par ce que tu veux)
+    const SECRET_CODE = "0123";
+
+    function unlock() {
+      const input = document.getElementById('secretInput').value.trim();
+      if (input === SECRET_CODE || input.length > 0) { // Déverrouille direct
+        document.getElementById('lockScreen').style.display = 'none';
+        document.getElementById('mainContent').classList.add('active');
+        startTimer();
+      } else {
+        document.getElementById('errorMsg').style.display = 'block';
+      }
+    }
+
+    // 📜 Ouvrir la lettre
+    function toggleLetter() {
+      const letter = document.getElementById('letterText');
+      letter.style.display = letter.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // ⏱️ Compteur (Exemple calé sur 1 an / 365 jours)
+    function startTimer() {
+      // Date de votre rencontre (Modifie l'année/mois/jour si tu veux : Année, Mois (0-11), Jour)
+      const startDate = new Date(2025, 9, 8); // Exemple: 8 Octobre 2025
+
+      setInterval(() => {
+        const now = new Date();
+        const diff = now - startDate;
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / 1000 / 60) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        document.getElementById('days').innerText = days;
+        document.getElementById('hours').innerText = hours;
+        document.getElementById('minutes').innerText = minutes;
+        document.getElementById('seconds').innerText = seconds;
+      }, 1000);
+    }
+
+    // 🎵 Audio
+    function playAudio() {
+      const audio = document.getElementById('vocalAudio');
+      const vinyl = document.getElementById('vinylIcon');
+      if (audio.paused) {
+        audio.play();
+        vinyl.classList.add('playing');
+      } else {
+        audio.pause();
+        vinyl.classList.remove('playing');
+      }
+    }
+
+    // 💬 Quiz & Formspree
+    function sendChoice(choice) {
+      document.getElementById('destinationChoice').value = choice;
+      alert("Choix enregistré : " + choice + " ✈️❤️");
+    }
+
+    function submitReaction(val) {
+      document.getElementById('reactionInput').value = val;
+      alert("Réaction : " + val);
+    }
+
+    const form = document.getElementById("annivForm");
+    form.addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const data = new FormData(e.target);
+      fetch(e.target.action, {
+        method: form.method,
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      }).then(() => {
+        document.getElementById('thanksMsg').style.display = 'block';
+        form.reset();
+      });
+    });
+  </script>
+</body>
+    </html>
+          
